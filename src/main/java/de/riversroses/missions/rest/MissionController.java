@@ -44,9 +44,10 @@ public class MissionController {
     return cursedDice.getRandomNumber();
   }
 
-  // body, reward granted
-  @Post("/{id}")
-  public void postMissionCompletion(Long id) {
-    missionService.removeMission(id);
+  @Post("/complete")
+  public HttpResponse<?> completeMission(@Body @Valid MissionDto mission) {
+    missionService.removeMission(mission.id());
+    return HttpResponse.ok();
   }
+
 }
