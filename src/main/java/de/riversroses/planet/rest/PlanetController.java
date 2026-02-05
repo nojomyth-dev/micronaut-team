@@ -1,6 +1,6 @@
 package de.riversroses.planet.rest;
 
-import de.riversroses.planet.TeamConfiguration;
+import de.riversroses.planet.configuration.TeamConfiguration;
 import de.riversroses.planet.dto.PlanetDto;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

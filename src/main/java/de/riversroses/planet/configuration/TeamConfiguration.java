@@ -1,4 +1,4 @@
-package de.riversroses.planet;
+package de.riversroses.planet.configuration;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 
