@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: micronaut-team
+  server:
+    port: 8081
