@@ -1,19 +1,25 @@
 package de.riversroses.missions.business;
 
-import java.util.Collection;
-
 import de.riversroses.missions.db.InMemoryMissionRepository;
 import de.riversroses.missions.db.MissionRepository;
 import de.riversroses.missions.dto.MissionDto;
 import jakarta.inject.Singleton;
+
+import java.util.Collection;
 
 @Singleton
 public class MissionService {
   
   private final MissionRepository missionRepository;
 
+  // nach DI
   public MissionService(InMemoryMissionRepository missionRepository) {
     this.missionRepository = missionRepository;
+  }
+
+  // vor DI
+  public MissionService() {
+    this.missionRepository = new InMemoryMissionRepository();
   }
 
   public void addMission() {

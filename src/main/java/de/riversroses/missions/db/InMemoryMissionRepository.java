@@ -1,11 +1,9 @@
 package de.riversroses.missions.db;
 
-import java.util.HashMap;
-
 import de.riversroses.missions.dto.MissionDto;
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.core.annotation.Introspected;
-import lombok.Data;
+
+import java.util.HashMap;
 
 @Prototype
 public class InMemoryMissionRepository implements MissionRepository {
@@ -16,10 +14,12 @@ public class InMemoryMissionRepository implements MissionRepository {
     this.missions = new HashMap<>();
   }
 
+  @Override
   public boolean removeMission(long missionId) {
     return missions.remove(missionId) != null;
   }
 
+  @Override
   public void addMission(Long id, MissionDto mission) {
     missions.put(id, mission);
   }

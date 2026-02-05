@@ -1,9 +1,7 @@
 package de.riversroses.missions.rest;
 
-import java.util.Collection;
-
-import de.riversroses.missions.business.MissionValueGenerator;
 import de.riversroses.missions.business.MissionService;
+import de.riversroses.missions.business.MissionValueGenerator;
 import de.riversroses.missions.dto.MissionDto;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
@@ -13,6 +11,8 @@ import io.micronaut.http.annotation.Post;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 
+import java.util.Collection;
+
 @Singleton
 @Controller("/missions")
 public class MissionController {
@@ -20,17 +20,16 @@ public class MissionController {
   private final MissionService missionService;
   private final MissionValueGenerator cursedDice;
 
-  // DependencyInjection sollen die später machen
+  // nach DI
   public MissionController(MissionService missionService, MissionValueGenerator cursedDice) {
     this.missionService = missionService;
     this.cursedDice = cursedDice;
   }
 
-  // Das ist am Anfang da und wird dann umgeschrieben auf Dependency Injection
-  // public MissionController() {
-  //   InMemoryMissionRepository missionRepository = new InMemoryMissionRepository();
-  //   this.missionService = new MissionService(missionRepository);
-  // }
+  // vor DI
+//   public MissionController() {
+//     this.missionService = new MissionService();
+//   }
 
   @Get
   public HttpResponse<Collection<MissionDto>> getMissions() {
