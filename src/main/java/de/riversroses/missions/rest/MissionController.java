@@ -5,16 +5,14 @@ import java.util.Collection;
 import de.riversroses.missions.business.MissionValueGenerator;
 import de.riversroses.missions.business.MissionService;
 import de.riversroses.missions.dto.MissionDto;
-import io.micronaut.context.annotation.Prototype;
-import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.runtime.http.scope.RequestScope;
 import jakarta.inject.Singleton;
+import jakarta.validation.Valid;
 
-// Zum austricksen
 @Singleton
 @Controller("/missions")
 public class MissionController {
