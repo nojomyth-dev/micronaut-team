@@ -3,3 +3,5 @@ micronaut:
     name: micronaut-team
   server:
     port: 8081
+team:
+  name: 99-AB-Rakete
