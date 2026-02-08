@@ -31,6 +31,44 @@
     </repositories>
 
     <dependencies>
+        <!-- Micronaut Data JPA integration -->
+        <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-hibernate-jpa</artifactId>
+        </dependency>
+
+        <!-- Micronaut Hibernate/JPA integration -->
+        <dependency>
+            <groupId>io.micronaut.sql</groupId>
+            <artifactId>micronaut-hibernate-jpa</artifactId>
+        </dependency>
+
+        <!-- Connection pool -->
+        <dependency>
+            <groupId>io.micronaut.sql</groupId>
+            <artifactId>micronaut-jdbc-hikari</artifactId>
+        </dependency>
+
+        <!-- Database driver (H2 in‑memory for the workshop) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Micronaut Data annotation processor -->
+        <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Micronaut Retry -->
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-retry</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-management</artifactId>
@@ -144,6 +182,12 @@
                         <path>
                             <groupId>io.micronaut.openapi</groupId>
                             <artifactId>micronaut-openapi</artifactId>
+                        </path>
+
+                        <!-- Micronaut Data processor -->
+                        <path>
+                            <groupId>io.micronaut.data</groupId>
+                            <artifactId>micronaut-data-processor</artifactId>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>

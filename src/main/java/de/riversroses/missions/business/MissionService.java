@@ -1,36 +1,68 @@
 package de.riversroses.missions.business;
 
-import de.riversroses.missions.db.InMemoryMissionRepository;
-import de.riversroses.missions.db.MissionRepository;
-import de.riversroses.missions.dto.MissionDto;
+import de.riversroses.infra.logging.Logged;
+import de.riversroses.missions.db.MissionLogRepository;
+import de.riversroses.missions.dto.MissionCompletionDto;
+import de.riversroses.missions.dto.MissionPayloadDto;
+import de.riversroses.missions.model.MissionLog;
+import de.riversroses.missions.model.MissionStatus;
+import io.micronaut.context.annotation.Value;
 import jakarta.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Singleton
+@Slf4j
 public class MissionService {
-  
-  private final MissionRepository missionRepository;
 
-  // nach DI
-  public MissionService(InMemoryMissionRepository missionRepository) {
-    this.missionRepository = missionRepository;
-  }
+    private final MissionLogRepository repo;
+    private final MissionRng rng;
 
-  // vor DI
-  public MissionService() {
-    this.missionRepository = new InMemoryMissionRepository();
-  }
+    @Value("${game.world.width:1000}")
+    protected double worldWidth;
 
-  public void addMission() {
-    missionRepository.addMission(5L, new MissionDto(1L, "new one", "new one", 1));
-  }
+    @Value("${game.world.height:1000}")
+    protected double worldHeight;
 
-  public boolean removeMission(long missionId) {
-    return missionRepository.removeMission(missionId);
-  }
+    public MissionService(MissionLogRepository repo, MissionRng rng) {
+        this.repo = repo;
+        this.rng = rng;
+    }
 
-  public Collection<MissionDto> getMissions() {
-    return missionRepository.getMissions().values();
-  }
+    @Logged
+    public MissionPayloadDto generateOrReuseMission() {
+        List<MissionLog> pending = repo.findByStatusOrderByCreatedAtDesc(MissionStatus.PENDING);
+        if (!pending.isEmpty()) {
+            return toDto(pending.get(0));
+        }
+
+        String missionId = "mission-" + UUID.randomUUID();
+        double x = rng.coordinate(worldWidth);
+        double y = rng.coordinate(worldHeight);
+
+        MissionLog missionLog = new MissionLog(missionId, "Explore the system near (" + (int) x + "," + (int) y + ")", x, y);
+        repo.save(missionLog);
+        log.info("A new mission has been generated: {}", missionLog);
+        return toDto(missionLog);
+    }
+
+    @Logged
+    public void markCompleted(MissionCompletionDto dto) {
+        repo.findByMissionId(dto.missionId)
+            .ifPresent(log -> {
+                log.complete(dto.shipId, dto.teamId);
+                repo.update(log);
+            });
+    }
+
+    private MissionPayloadDto toDto(MissionLog log) {
+        MissionPayloadDto dto = new MissionPayloadDto();
+        dto.id = log.getMissionId();
+        dto.description = log.getDescription();
+        dto.x = log.getX();
+        dto.y = log.getY();
+        return dto;
+    }
 }

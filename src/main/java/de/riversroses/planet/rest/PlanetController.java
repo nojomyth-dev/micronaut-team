@@ -1,21 +1,25 @@
 package de.riversroses.planet.rest;
 
-import de.riversroses.planet.configuration.TeamConfiguration;
-import de.riversroses.planet.dto.PlanetDto;
+import de.riversroses.config.TeamConfig;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.serde.annotation.Serdeable;
 
 @Controller("/planet")
 public class PlanetController {
 
-    private final TeamConfiguration team;
+  private final TeamConfig teamConfig;
 
-    PlanetController(TeamConfiguration team) {
-        this.team = team;
-    }
-  
+  public PlanetController(TeamConfig teamConfig) {
+    this.teamConfig = teamConfig;
+  }
+
   @Get
-  public PlanetDto getPlanetInformation() {
-      return new PlanetDto(team.name());
+  public PlanetInfo planet() {
+    return new PlanetInfo(teamConfig.name(), teamConfig.planetName());
+  }
+
+  @Serdeable
+  public record PlanetInfo(String teamName, String planetName) {
   }
 }
