@@ -1,6 +1,4 @@
 package de.riversroses.missions.model;
-
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
