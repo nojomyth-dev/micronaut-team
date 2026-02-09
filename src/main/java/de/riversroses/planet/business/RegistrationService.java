@@ -39,7 +39,7 @@ public class RegistrationService implements ApplicationEventListener<Application
       registerTeamIfNeeded();
       registerShipIfNeeded();
     } catch (Exception e) {
-      LOG.error("Failed to register with game server", e);
+      LOG.error("Failed to register with game server: {}", e.getMessage());
     }
   }
 
