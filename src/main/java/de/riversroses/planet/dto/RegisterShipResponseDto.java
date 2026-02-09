@@ -6,7 +6,6 @@ import io.micronaut.serde.annotation.Serdeable;
 import java.util.List;
 
 @Serdeable
-@Introspected
 public record RegisterShipResponseDto(
     String teamId,
     String planetId,

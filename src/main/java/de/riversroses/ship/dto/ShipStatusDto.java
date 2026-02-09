@@ -6,7 +6,6 @@ import io.micronaut.serde.annotation.Serdeable;
 import java.util.Map;
 
 @Serdeable
-@Introspected
 public record ShipStatusDto(
         String shipId,
         String displayName,

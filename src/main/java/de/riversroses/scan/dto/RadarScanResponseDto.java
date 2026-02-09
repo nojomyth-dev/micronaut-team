@@ -6,13 +6,11 @@ import io.micronaut.serde.annotation.Serdeable;
 import java.util.List;
 
 @Serdeable
-@Introspected
 public record RadarScanResponseDto(
     List<FoundShip> ships,
     List<FoundResource> resources) {
 
   @Serdeable
-  @Introspected
   public static record FoundShip(
       String shipId,
       String teamName,
@@ -23,7 +21,6 @@ public record RadarScanResponseDto(
   }
 
   @Serdeable
-  @Introspected
   public static record FoundResource(
       String id,
       String oreId,

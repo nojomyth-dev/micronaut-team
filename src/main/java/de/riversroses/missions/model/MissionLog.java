@@ -17,7 +17,6 @@ import java.time.Instant;
 @Entity
 @Table(name = "mission_log")
 @Serdeable
-@Introspected
 @Data
 public class MissionLog {
 

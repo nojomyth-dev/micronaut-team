@@ -5,7 +5,6 @@ import io.micronaut.serde.annotation.Serdeable;
 import jakarta.validation.constraints.NotBlank;
 
 @Serdeable
-@Introspected
 public record RegisterTeamRequestDto(
     @NotBlank String token,
     @NotBlank String teamName,

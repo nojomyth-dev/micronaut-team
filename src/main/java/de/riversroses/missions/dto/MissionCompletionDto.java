@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Serdeable
-@Introspected
 @Data
 public class MissionCompletionDto {
 
