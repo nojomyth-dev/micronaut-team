@@ -2,6 +2,7 @@ package de.riversroses.missions.db;
 
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Singleton
 @Requires(beans = JPAMissionLogRepository.class)
+@Primary
 public class DatabaseMissionLogRepository implements MissionLogRepository {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseMissionLogRepository.class);
