@@ -1,5 +1,8 @@
 package de.riversroses.missions.dto;
 
+import io.micronaut.serde.annotation.Serdeable;
+
+@Serdeable
 public class MissionCompletionDto {
 
   public String missionId;
