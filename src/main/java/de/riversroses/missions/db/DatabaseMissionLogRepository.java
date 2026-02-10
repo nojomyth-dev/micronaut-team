@@ -7,26 +7,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class DatabaseMissionLogRepository {
-    private final JpaMissionLogRepository jpaMissionLogRepository;
 
-    public DatabaseMissionLogRepository(JpaMissionLogRepository jpaMissionLogRepository) {
-        this.jpaMissionLogRepository = jpaMissionLogRepository;
-    }
 
     public List<MissionLog> findByStatusOrderByCreatedAtDesc(MissionStatus status) {
-        return jpaMissionLogRepository.findByStatusOrderByCreatedAtDesc(status);
+        return List.of();
     }
 
     public Optional<MissionLog> findByMissionId(String missionId) {
-        return jpaMissionLogRepository.findByMissionId(missionId);
+        return Optional.empty();
     }
 
     public void save(MissionLog missionLog) {
-        jpaMissionLogRepository.save(missionLog);
+
     }
 
     public void update(MissionLog log) {
-        jpaMissionLogRepository.update(log);
     }
 
 }
