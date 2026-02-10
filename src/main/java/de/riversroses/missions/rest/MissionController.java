@@ -14,8 +14,8 @@ public class MissionController {
 
     private final MissionService missionService;
 
-    public MissionController() {
-        missionService = new MissionService();
+    public MissionController(MissionService missionService) {
+        this.missionService = missionService;
     }
 
     @Get

@@ -2,12 +2,14 @@ package de.riversroses.missions.db;
 
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
+import jakarta.inject.Singleton;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryMissionLogRepository {
+@Singleton
+public class InMemoryMissionLogRepository implements MissionLogRepository {
 
     private final HashMap<Long, MissionLog> missions;
 
