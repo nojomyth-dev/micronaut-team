@@ -1,0 +1,39 @@
+package de.riversroses.missions.db;
+
+import de.riversroses.missions.model.MissionLog;
+import de.riversroses.missions.model.MissionStatus;
+import jakarta.inject.Singleton;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+@Singleton
+public class InMemoryMissionLogRepository implements MissionLogRepository {
+
+    private final HashMap<Long, MissionLog> missions;
+
+    public InMemoryMissionLogRepository() {
+        this.missions = new HashMap<>();
+    }
+
+    @Override
+    public List<MissionLog> findByStatusOrderByCreatedAtDesc(MissionStatus status) {
+        return missions.values().stream().toList();
+    }
+
+    @Override
+    public Optional<MissionLog> findByMissionId(String missionId) {
+        return Optional.ofNullable(missions.get(Long.parseLong(missionId)));
+    }
+
+    @Override
+    public void save(MissionLog missionLog) {
+        missions.put(missionLog.getId(), missionLog);
+    }
+
+    @Override
+    public void update(MissionLog missionLog) {
+        missions.put(missionLog.getId(), missionLog);
+    }
+}

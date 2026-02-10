@@ -1,7 +1,7 @@
 package de.riversroses.missions.business;
 
 import de.riversroses.infra.logging.Logged;
-import de.riversroses.missions.db.MissionLogRepository;
+import de.riversroses.missions.db.DatabaseMissionLogRepository;
 import de.riversroses.missions.dto.MissionCompletionDto;
 import de.riversroses.missions.dto.MissionPayloadDto;
 import de.riversroses.missions.model.MissionLog;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 public class MissionService {
 
-    private final MissionLogRepository repo;
+    private final DatabaseMissionLogRepository repo;
     private final MissionRng rng;
 
     @Value("${game.world.width:1000}")
@@ -26,10 +26,15 @@ public class MissionService {
     @Value("${game.world.height:1000}")
     protected double worldHeight;
 
-    public MissionService(MissionLogRepository repo, MissionRng rng) {
+    public MissionService(DatabaseMissionLogRepository repo, MissionRng rng) {
         this.repo = repo;
         this.rng = rng;
     }
+
+//    public MissionService() {
+//        this.repo = new InMemoryMissionLogRepository();
+//        this.rng = new MissionRng();
+//    }
 
     @Logged
     public MissionPayloadDto generateOrReuseMission() {
