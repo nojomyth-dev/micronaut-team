@@ -1,6 +1,5 @@
 package de.riversroses.missions.business;
 
-import de.riversroses.infra.logging.Logged;
 import de.riversroses.missions.db.InMemoryMissionLogRepository;
 import de.riversroses.missions.dto.MissionCompletionDto;
 import de.riversroses.missions.dto.MissionPayloadDto;
@@ -29,7 +28,6 @@ public class MissionService {
         this.rng = new MissionRng();
     }
 
-    @Logged
     public MissionPayloadDto generateOrReuseMission() {
         List<MissionLog> pending = repo.findByStatusOrderByCreatedAtDesc(MissionStatus.PENDING);
         if (!pending.isEmpty()) {
@@ -46,7 +44,6 @@ public class MissionService {
         return toDto(missionLog);
     }
 
-    @Logged
     public void markCompleted(MissionCompletionDto dto) {
         repo.findByMissionId(dto.missionId)
             .ifPresent(log -> {
