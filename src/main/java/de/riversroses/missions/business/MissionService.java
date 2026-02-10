@@ -1,23 +1,21 @@
 package de.riversroses.missions.business;
 
 import de.riversroses.infra.logging.Logged;
-import de.riversroses.missions.db.DatabaseMissionLogRepository;
+import de.riversroses.missions.db.InMemoryMissionLogRepository;
 import de.riversroses.missions.dto.MissionCompletionDto;
 import de.riversroses.missions.dto.MissionPayloadDto;
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
 import io.micronaut.context.annotation.Value;
-import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
 
-@Singleton
 @Slf4j
 public class MissionService {
 
-    private final DatabaseMissionLogRepository repo;
+    private final InMemoryMissionLogRepository repo;
     private final MissionRng rng;
 
     @Value("${game.world.width:1000}")
@@ -26,15 +24,10 @@ public class MissionService {
     @Value("${game.world.height:1000}")
     protected double worldHeight;
 
-    public MissionService(DatabaseMissionLogRepository repo, MissionRng rng) {
-        this.repo = repo;
-        this.rng = rng;
+    public MissionService() {
+        this.repo = new InMemoryMissionLogRepository();
+        this.rng = new MissionRng();
     }
-
-//    public MissionService() {
-//        this.repo = new InMemoryMissionLogRepository();
-//        this.rng = new MissionRng();
-//    }
 
     @Logged
     public MissionPayloadDto generateOrReuseMission() {
