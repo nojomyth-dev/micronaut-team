@@ -1,7 +1,7 @@
 package de.riversroses.planet.business;
 
 import de.riversroses.config.TeamConfig;
-import de.riversroses.infra.client.GameServerClient;
+import de.riversroses.infra.client.RegistrationClient;
 import de.riversroses.planet.dto.RegisterTeamRequestDto;
 import de.riversroses.ship.dto.RegisterShipRequestDto;
 import de.riversroses.ship.dto.ShipStatusDto;
@@ -21,15 +21,15 @@ public class RegistrationService implements ApplicationEventListener<Application
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
 
-  private final GameServerClient gameClient;
+  private final RegistrationClient registrationClient;
   private final TeamConfig teamConfig;
 
   // state
   private volatile String teamId;
   private volatile String primaryShipId;
 
-  public RegistrationService(GameServerClient gameClient, TeamConfig teamConfig) {
-    this.gameClient = gameClient;
+  public RegistrationService(RegistrationClient registrationClient, TeamConfig teamConfig) {
+    this.registrationClient = registrationClient;
     this.teamConfig = teamConfig;
   }
 
@@ -54,7 +54,7 @@ public class RegistrationService implements ApplicationEventListener<Application
     LOG.info("No ships found (or token unknown). Attempting to register team...");
     RegisterTeamRequestDto req = new RegisterTeamRequestDto(
         teamConfig.token(), teamConfig.name(), teamConfig.planetName());
-    var resp = gameClient.registerTeam(req);
+    var resp = registrationClient.registerTeam(req);
     teamId = resp.teamId();
     LOG.info("Registered team {} with id {}", teamConfig.name(), teamId);
   }
@@ -66,7 +66,7 @@ public class RegistrationService implements ApplicationEventListener<Application
       LOG.info("Using existing ship {}", primaryShipId);
       return;
     }
-    ShipStatusDto ship = gameClient.registerShip(
+    ShipStatusDto ship = registrationClient.registerShip(
         teamConfig.token(), new RegisterShipRequestDto("Flagship"));
     primaryShipId = ship.shipId();
     LOG.info("Registered new ship {}", primaryShipId);
@@ -79,7 +79,7 @@ public class RegistrationService implements ApplicationEventListener<Application
    */
   private List<ShipStatusDto> getMyShipsSafe() {
     try {
-      List<ShipStatusDto> ships = gameClient.myShips(teamConfig.token());
+      List<ShipStatusDto> ships = registrationClient.myShips(teamConfig.token());
       return ships != null ? ships : Collections.emptyList();
     } catch (HttpClientResponseException e) {
       // If the token is unknown to the server, we assume the team is not registered
