@@ -1,5 +1,8 @@
 package de.riversroses.missions.dto;
 
+import lombok.Data;
+
+@Data
 public class MissionPayloadDto {
 
   public String id;
