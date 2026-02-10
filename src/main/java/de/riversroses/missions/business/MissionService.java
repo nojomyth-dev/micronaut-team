@@ -6,13 +6,15 @@ import de.riversroses.missions.dto.MissionPayloadDto;
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
 import io.micronaut.context.annotation.Value;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 public class MissionService {
+
+    private static final Logger log = LoggerFactory.getLogger(MissionService.class);
 
     private final InMemoryMissionLogRepository repo;
     private final MissionRng rng;
