@@ -1,8 +1,10 @@
 package de.riversroses.missions.dto;
 
 import io.micronaut.serde.annotation.Serdeable;
+import lombok.Data;
 
 @Serdeable
+@Data
 public class MissionPayloadDto {
 
   public String id;
