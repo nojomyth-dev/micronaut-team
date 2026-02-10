@@ -5,7 +5,6 @@ import de.riversroses.missions.dto.MissionCompletionDto;
 import de.riversroses.missions.dto.MissionPayloadDto;
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
-import io.micronaut.context.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +18,9 @@ public class MissionService {
     private final InMemoryMissionLogRepository repo;
     private final MissionRng rng;
 
-    @Value("${game.world.width:1000}")
-    protected double worldWidth;
+    protected double worldWidth = 1000;
 
-    @Value("${game.world.height:1000}")
-    protected double worldHeight;
+    protected double worldHeight = 1000;
 
     public MissionService() {
         this.repo = new InMemoryMissionLogRepository();
