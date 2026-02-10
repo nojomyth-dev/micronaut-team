@@ -38,7 +38,7 @@ public class PatrolStrategyService {
         try {
             // scan
 
-            SetCourseRequestDto course = calculateCourse(null, shipId);
+            //SetCourseRequestDto course = calculateCourse(scan, shipId);
 
             // set course
         } catch (Exception e) {
