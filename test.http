@@ -1,0 +1,18 @@
+# only with intelliJ ultimate :(
+### get mission
+GET localhost:8081/missions
+
+> {%
+    client.global.set("missionId", response.body.id);
+%}
+
+### complete mission
+POST localhost:8081/missions/complete
+Content-Type: application/json
+
+{
+  "missionId": "{{missionId}}",
+  "shipId": "meinSchiff",
+  "teamId": "meinTeam",
+  "reward": 5
+}
