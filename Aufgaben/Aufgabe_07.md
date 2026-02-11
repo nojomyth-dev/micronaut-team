@@ -1,4 +1,4 @@
-# 6 The Six Sigamas of Space (Testing) (10min)
+# 7 The Six Sigamas of Space (Testing) (10min)
 
 ## Background
 Admiral... Schlechte Neuigkeiten. Ein fehlerhaftes Bauteil hat ein Schiff zerstört. Wir führen ab sofort das Six Sigma Protokoll ein: Wir testen alles!

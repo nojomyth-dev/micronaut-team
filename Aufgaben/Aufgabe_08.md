@@ -1,4 +1,4 @@
-# 7 Hello.. Hello? Can you hear me? (OpenAPI) (10min)
+# 8 Hello.. Hello? Can you hear me? (OpenAPI) (10min)
 
 ## Background
 
