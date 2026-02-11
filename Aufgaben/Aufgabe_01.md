@@ -5,33 +5,37 @@ Bevor wir die Sterne erobern können, müssen wir erst wissen, wer ihr seid. Eur
 
 ## Anweisung
 
-Klont das [Repository](https://github.com/nojomyth-dev/micronaut-team) und öffnet es in IntelliJ
-```bash
-git clone https://github.com/nojomyth-dev/micronaut-team
-```
+Findet euch bitte in Zweiergruppen zusammen, idealerweise sollte mindestens eine Person Erfahrung in Java haben.
 
-Navigiert zu `src/main/resources/application.yml` und tragt euren eindeutigen Token in folgendem Format ein `<teamnummer>-<erste Buchstaben der Vornamen>-<ein zufälliges Wort>`
+Öffnet IntelliJ und pullt das vorinstallierte Repository (Ctrl + T).  
+Wechselt anschließend auf den Branch `0-vorher` (`git checkout 0-vorher && git pull`).
 
-**keine Umlaute**
+Navigiert zu `src/main/resources/application.yml` und tragt euren eindeutigen Token in folgendem Format ein `<teamnummer>-<erste Buchstaben der Vornamen>-<ein zufälliges Wort>` (am Anfang der Datei). Wählt zusätzlich einen Namen für euer Raumschiff (name) und euren Planeten (planet-name).
 
-**Beispiel: 04-FC-Momo**
+**keine Umlaute!**
+
+**Beispiel: 01-FC-Momo**
 ```yaml
 team:
-  token: "cmd-demo-token-123"
-  name: "Demo Squadron"
-  planet-name: "Demo Prime"
+  token: "01-FC-Momo"
+  name: "Cat Delivery"
+  planet-name: "Fluffy Cats"
 ```
 
 An der Tafel findet ihr die Base-URL, welche ihr hier eintragt: 
 ```yaml
 game-server:
-  base-url: "http://localhost:8080"
+  base-url: "http://<ip_address>:8080"
 ```
 
-Startet den Service entweder mit folgendem Command oder innerhalb ihrer IntelliJ IDE
+Startet den Service entweder mit folgendem Command oder innerhalb eurer IntelliJ IDE
 
 ```bash
 mvn mn:run
 ```
 
 Ihr solltet nun euren Planeten und Raumschiffe auf der Karte sehen können. (Hinweis: Das kann ein paar Sekunden dauern).
+Falls etwas nicht funktioniert, gebt uns bitte Bescheid!
+
+Ihr könnt die Karte ebenfalls öffnen, loggt euch bitte mit eurem oben gewählten Token ein.
+Die URL (`http://<ip_address>:8080/index.html`) erhaltet ihr von uns an der Tafel (gleiche wie oben).
