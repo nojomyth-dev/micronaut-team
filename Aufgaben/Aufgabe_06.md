@@ -1,14 +1,16 @@
-# 5 Operation: Data-Airlock (Validation) (10min)
+# 6 Operation Teapot! 
 
 ## Background
-Kommandeur! Weltraumpiraten versuchen, uns weiter mit korrupten Datenpaketen zu sabotieren!
-Wir müssen unsere Endpunkte besser sichern und können uns nicht darauf verlassen das unsere unbezahlten Praktikanten (die sehr glücklich sind) immer If/Else verwenden!
+Trotz besserer Sicherheitsprotokolle versuchen die Piraten uns immernoch ungültige Missionen unterzujubeln! Weltrauminternet ist nicht billig!
+Wir müssen sie irgendwie überlisten uns in ruhe zu lassen..
 
 
 ## Anweisung
-DTO-Schutz: Nutzt `@NotNull`, `@NotBlank`, `@Min(1)` und `@Positive` in euren DTOs.
 
-Trigger: Aktiviert die Validierung in eurem Controller mit der `@Valid` Annotation am Parameter.
-Ersetzt eure `if/else` Prüfungen durch Micronaut Validation.
+Nutzt die `@Error`-Annotation direkt in eurem `MissionController`. Ziel ist es, den Standard-Validierungsfehler (der durch `@Valid` ausgelöst wird) abzufangen und die Piraten abzuweisen.
 
-Erfolg: Versucht eine ungültige Mission zu senden - der Satellit sollte automatisch mit einem 400 Bad Request antworten, noch bevor euer Code ausgeführt wird! Euer Controller sollte bis auf das `@Valid` keine weitere Validierung mehr besitzen!
+- Fügt eine Methode im `MissionController` hinzu, die auf die `ConstraintViolationException` reagiert.
+-  Markiert diese Methode mit der `@Error`-Annotation.
+- Nutzt `HttpResponse.status(HttpStatus.I_AM_A_TEAPOT)`
+
+Erfolg: Versucht eine ungültige Mission zu senden - der Satellit sollte mit einem `418 I'm a teapot` antworten. 
