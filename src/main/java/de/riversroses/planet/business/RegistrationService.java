@@ -35,12 +35,12 @@ public class RegistrationService implements ApplicationEventListener<Application
 
   @Override
   public void onApplicationEvent(ApplicationStartupEvent event) {
-    try {
-      registerTeamIfNeeded();
-      registerShipIfNeeded();
-    } catch (Exception e) {
-      LOG.error("Failed to register with game server: {}", e.getMessage());
-    }
+//    try {
+//      registerTeamIfNeeded();
+//      registerShipIfNeeded();
+//    } catch (Exception e) {
+//      LOG.error("Failed to register with game server: {}", e.getMessage());
+//    }
   }
 
   private void registerTeamIfNeeded() {
