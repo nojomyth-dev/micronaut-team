@@ -1,11 +1,16 @@
-# 6 The Six Sigamas of Space (Testing) (10min)
+# 6 Operation Teapot! 
 
 ## Background
-Admiral... Schlechte Neuigkeiten. Ein fehlerhaftes Bauteil hat ein Schiff zerstört. Wir führen ab sofort das Six Sigma Protokoll ein: Wir testen alles!
+Trotz besserer Sicherheitsprotokolle versuchen die Piraten uns immernoch ungültige Missionen unterzujubeln! Weltrauminternet ist nicht billig!
+Wir müssen sie irgendwie überlisten uns in ruhe zu lassen..
 
-## Anweisung 
-Schreibt automatisierte Tests mit `@MicronautTest`.
 
-Integrität: Prüft, ob GET /missions eine valide Liste zurückgibt. Einmal Leer, einmal mit mocked Missions!
-Erfolgsmeldung: Testet, ob POST /missions/complete bei korrekten Daten einen 200 OK sendet.
-Abwehr: Testet, ob eine invalide Mission (z.B. negative Credits) wirklich einen 400 Bad Request provoziert.
+## Anweisung
+
+Nutzt die `@Error`-Annotation direkt in eurem `MissionController`. Ziel ist es, den Standard-Validierungsfehler (der durch `@Valid` ausgelöst wird) abzufangen und die Piraten abzuweisen.
+
+- Fügt eine Methode im `MissionController` hinzu, die auf die `ConstraintViolationException` reagiert.
+-  Markiert diese Methode mit der `@Error`-Annotation.
+- Nutzt `HttpResponse.status(HttpStatus.I_AM_A_TEAPOT)`
+
+Erfolg: Versucht eine ungültige Mission zu senden - der Satellit sollte mit einem `418 I'm a teapot` antworten. 
