@@ -8,15 +8,10 @@ Damit unsere Raumschiffe wissen, welche möglichen Orte wir ausfindig gemacht ha
 
 Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
 
-`GET /missions` Implementiert diesen Endpunkt. Er soll eine Liste von Missionen zurückgeben.
-1. ID
-2. Beschreibung
-3. Zielkoordinaten
-4. Belohnung
+`GET /missions` Implementiert diesen Endpunkt. Er soll eine Missionen zurückgeben. Um missionen von eurem Planeten zu Erhalten nutzt ```MissionService.generateOrReuseMission()``` und versendet das ```MissionPayloadDto``` Objekt mit ```return```.
 
-`POST /missions/complete` Implementiert diesen Endpunkt. Hier meldet der Satellit den Erfolg einer Mission.
-1. Mission-ID
-2. Team-ID
+
+`POST /missions/complete` Implementiert diesen Endpunkt. Hier meldet der Satellit den Erfolg einer Mission durch das ```MissionCompletionDto```.
 
 
 ## Background
@@ -27,4 +22,4 @@ Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planete
 
 Security-Check: Störsignale senden manchmal Missionen mit Belohnungen <= 0. 
 
-Sortiert Missionen mit Belohnungen <= 0 aus und beantwortet diese mit `HTTP Statuscode 400` durch Verwendung von `if/else`.
+Sortiert Missionen mit Belohnungen <= 0 aus und beantwortet diese mit `HTTP Statuscode 400` durch Verwendung von `if/else` und `HttpResponse.badRequest()`.

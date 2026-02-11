@@ -19,19 +19,44 @@ public class MissionController {
         this.missionService = missionService;
     }
 
-    //  Aufgabe 1
+    
     @Get
     public MissionPayloadDto getMission() {
         var mission = missionService.generateOrReuseMission();
         return mission;
     }
 
+
+
     @Post("/complete")
     public HttpResponse<?> complete(@Body @Valid MissionCompletionDto completion) {
-
         missionService.markCompleted(completion);
         return HttpResponse.ok();
     }
+
+
+    /* Musterlösung A2
+
+    @Get
+    public MissionPayloadDto getMission() {
+        var mission = missionService.generateOrReuseMission();
+        return mission;
+    }
+
+
+    @Post("/complete")
+    public HttpResponse<?> complete(@Body MissionCompletionDto completion) {
+        // Security-Check: Störsignale aussortieren
+        if (completion.getReward() <= 0) {
+            // Antwortet mit HTTP 400, wenn die Belohnung ungültig ist
+            return HttpResponse.badRequest(); 
+        } else {
+            // Nur wenn die Belohnung > 0 ist, wird die Mission markiert
+            missionService.markCompleted(completion);
+            return HttpResponse.ok();
+        }
+    }
+    */
     
 
    //costom valiudationerrorhandeler
