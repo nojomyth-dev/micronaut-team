@@ -5,9 +5,9 @@ import de.riversroses.infra.client.GameServerClient;
 import de.riversroses.planet.business.RegistrationService;
 import de.riversroses.scan.dto.RadarScanResponseDto;
 import de.riversroses.ship.dto.SetCourseRequestDto;
+import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
-import io.micronaut.scheduling.annotation.Scheduled;
 
 import java.util.Random;
 
@@ -15,23 +15,23 @@ import java.util.Random;
 @Slf4j
 public class PatrolStrategyService {
 
-  private final GameServerClient gameClient;
   private final RegistrationService registrationService;
   private final StrategyConfig config;
   private final Random random = new Random();
+  private final GameServerClient gameServerClient;
 
-  public PatrolStrategyService(GameServerClient gameClient,
-      RegistrationService registrationService,
-      StrategyConfig config) {
+  public PatrolStrategyService(GameServerClient gameServerClient,
+                               RegistrationService registrationService,
+                               StrategyConfig config) {
 
-    this.gameClient = gameClient;
     this.registrationService = registrationService;
     this.config = config;
+    this.gameServerClient = gameServerClient;
   }
 
   @Scheduled(fixedDelay = "5s")
   public void tick() {
-    
+
     String token = registrationService.token();
     String shipId = registrationService.primaryShipId();
 
@@ -40,27 +40,34 @@ public class PatrolStrategyService {
     }
 
     try {
-      RadarScanResponseDto scan = gameClient.scan(token, shipId);
-      log.info("Scan: {} resources", scan.resources().size());
+      RadarScanResponseDto scan = gameServerClient.scan(token, shipId);
 
-      double targetX;
-      double targetY;
+      SetCourseRequestDto course = calculateCourse(scan, shipId);
 
-      if (!scan.resources().isEmpty() && random.nextDouble() > config.homeBiasOrDefault()) {
-        var res = scan.resources().get(0);
-        targetX = res.x();
-        targetY = res.y();
-        log.info("Heading to resource {} at {},{}", res.oreId(), targetX, targetY);
-      } else {
-        // random patrol point near center
-        targetX = 500 + (random.nextDouble() - 0.5) * 300;
-        targetY = 500 + (random.nextDouble() - 0.5) * 300;
-        log.info("Patrolling to {},{}", targetX, targetY);
-      }
-
-      gameClient.setCourse(token, new SetCourseRequestDto(shipId, targetX, targetY));
+      gameServerClient.setCourse(token, course);
     } catch (Exception e) {
       log.warn("Strategy tick failed: {}", e.toString());
     }
+  }
+
+  private SetCourseRequestDto calculateCourse(RadarScanResponseDto scan, String shipId) {
+    log.info("Scan: {} resources", scan.resources().size());
+
+    double targetX;
+    double targetY;
+
+    if (!scan.resources().isEmpty() && random.nextDouble() > config.homeBiasOrDefault()) {
+      var res = scan.resources().get(0);
+      targetX = res.x();
+      targetY = res.y();
+      log.info("Heading to resource {} at {},{}", res.oreId(), targetX, targetY);
+    } else {
+      // random patrol point near center
+      targetX = 500 + (random.nextDouble() - 0.5) * 300;
+      targetY = 500 + (random.nextDouble() - 0.5) * 300;
+      log.info("Patrolling to {},{}", targetX, targetY);
+    }
+
+    return new SetCourseRequestDto(shipId, targetX, targetY);
   }
 }
