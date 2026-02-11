@@ -27,4 +27,4 @@ Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planete
 
 Security-Check: Störsignale senden manchmal Missionen mit Belohnungen <= 0. 
 
-Sortiert Missionen mit Belohnungen <= 0 aus und beantwortet diese mit `HTTP Statuscode 400` durch Verwendung von `if/else`.
+Sortiert Missionen mit Belohnungen <= 0 aus und beantwortet diese mit `HTTP Statuscode 400` durch Verwendung von `if/else` und `return HttpResponse.badRequest()`.
