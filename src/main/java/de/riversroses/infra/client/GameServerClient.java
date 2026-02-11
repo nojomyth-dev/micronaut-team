@@ -29,7 +29,7 @@ public interface GameServerClient {
   @Post("/ships/course")
   void setCourse(@Header("X-Token") String token, @Body SetCourseRequestDto req);
 
-@Get("/scan{?shipId}")
+  @Get("/scan{?shipId}")
   RadarScanResponseDto scan(
       @Header("X-Token") String token, 
       @Nullable @QueryValue("shipId") String shipId
