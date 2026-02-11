@@ -7,10 +7,12 @@ import de.riversroses.missions.dto.MissionPayloadDto;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller("/missions")
 @Slf4j
+@Logged
 public class MissionController {
 
     private final MissionService missionService;
