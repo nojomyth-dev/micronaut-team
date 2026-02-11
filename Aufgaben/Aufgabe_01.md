@@ -1,41 +1,20 @@
-# 1 Welcome to Space Sector 4-Apfel-07 (10min)
+# 1 Cadet, we want to explore! (10min)
 
 ## Background
-Bevor wir die Sterne erobern können, müssen wir erst wissen, wer ihr seid. Eure erste Aufgabe: Zeigt dem Sektor, wer ihr seid!
+Kadett! Unser Heimatplanet wird etwas eng! Wir wollen expandieren. Mit unseren hochmodernen Teleskopen haben wir mögliche Sternensysteme ausfindig gemacht, die habitable Planeten haben könnten. Bitte fliege dorthin und prüfe die Planeten, ob diese schöne Strände haben...
+Damit unsere Raumschiffe wissen, welche möglichen Orte wir ausfindig gemacht haben, senden wir diese über unseren Satelliten zu euch.
+
+**Achtung:** Durch Störsignale kann es manchmal vorkommen, dass der Satellit falsche Daten empfängt und euch Missionen schickt, die gar nicht existieren! Durch hochtechnische Analysen konnten wir feststellen, dass die Credits in diesem Fall immer <= 0 sind. Bitte lehnt diese Missionen unbedingt ab!
 
 ## Anweisung
 
-Findet euch bitte in Zweiergruppen zusammen, idealerweise sollte mindestens eine Person Erfahrung in Java haben.
+Dateipfad: `src/main/java/de/riversroses/missions/rest/MissionController.java`
+Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
 
-Öffnet IntelliJ und pullt das vorinstallierte Repository (Ctrl + T).  
-Wechselt anschließend auf den Branch `0-vorher` (`git checkout 0-vorher && git pull`).
+a) Die Klasse MissionController benötigt einen `de.riversroses.missions.business.MissionService.java`. Dieser soll als privates und finales Feld deklariert sein. Der MissionService soll über einen Constructor mit `new MissionService()` gesetzt werden.
 
-Navigiert zu `src/main/resources/application.yml` und tragt euren eindeutigen Token in folgendem Format ein `<teamnummer>-<erste Buchstaben der Vornamen>-<ein zufälliges Wort>` (am Anfang der Datei). Wählt zusätzlich einen Namen für euer Raumschiff (name) und euren Planeten (planet-name).
+b) Implementiert den Endpunkt `GET /missions`. Dieser gibt den Return-Value von `missionService.generateOrReuseMission()` vom Datentyp `de.riversroses.missions.dto.MissionPayloadDto` zurück.
 
-**keine Umlaute!**
+c) Implementiert den Endpunkt `POST /missions/complete`. Die Funktion nimmt eine Mission vom Datentyp `de.riversroses.missions.dto.MissionCompletionDto` entgegen. Der Erfolg einer Mission wird über `missionService.markCompleted(mission)` gemeldet und schließlich wird `io.micronaut.http.HttpResponse.ok()` zurückgegeben.
 
-**Beispiel: 01-FC-Momo**
-```yaml
-team:
-  token: "01-FC-Momo"
-  name: "Cat Delivery"
-  planet-name: "Fluffy Cats"
-```
-
-An der Tafel findet ihr die Base-URL, welche ihr hier eintragt: 
-```yaml
-game-server:
-  base-url: "http://<ip_address>:8080"
-```
-
-Startet den Service entweder mit folgendem Command oder innerhalb eurer IntelliJ IDE
-
-```bash
-mvn mn:run
-```
-
-Ihr solltet nun euren Planeten und Raumschiffe auf der Karte sehen können. (Hinweis: Das kann ein paar Sekunden dauern).
-Falls etwas nicht funktioniert, gebt uns bitte Bescheid!
-
-Ihr könnt die Karte ebenfalls öffnen, loggt euch bitte mit eurem oben gewählten Token ein.
-Die URL (`http://<ip_address>:8080/index.html`) erhaltet ihr von uns an der Tafel (gleiche wie oben).
+d) Verwendet `if/else` um Missionen mit einer Belohnung kleiner gleich 0 auszusortieren, indem ihr `io.micronaut.http.HttpResponse.badRequest()` zurückgebt.
