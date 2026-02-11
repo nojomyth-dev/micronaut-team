@@ -22,13 +22,11 @@ Implementiert einen **HTTP-Client** mit **Circuit Breaker** und **Fallback-Mecha
 Erstellt ein Interface `de.riversroses.infra.client.GameServerClient` mit der Annotation `@Client(id = "game-server")`.
 
 Implementiert folgende Endpunkte:
-- `POST /ships/teams/register`: Registriert euer Team (Body: `RegisterTeamRequestDto`, Return: `RegisterShipResponseDto`)
-- `POST /ships/register`: Registriert ein neues Schiff (Header: `X-Token`, Body: `RegisterShipRequestDto`, Return: `ShipStatusDto`)
-- `GET /ships/me`: Holt alle eure Schiffe (Header: `X-Token`, Return: `List<ShipStatusDto>`)
 - `POST /ships/course`: Setzt den Kurs eines Schiffes (Header: `X-Token`, Body: `SetCourseRequestDto`, Return: `void`)
 - `GET /scan{?shipId}`: Führt einen Radarscan durch (Header: `X-Token`, Optional Query: `shipId`, Return: `RadarScanResponseDto`)
 
 **Hinweis:** Nutzt `@Header("X-Token")` für den Token und `@Nullable @QueryValue("shipId")` für optionale Query-Parameter.
+
 
 ### b) Die Sicherung einbauen: Circuit Breaker
 
@@ -45,9 +43,6 @@ Erstellt eine Klasse `de.riversroses.infra.client.GameServerClientFallback`, die
 - Das `GameServerClient`-Interface implementiert
 - Mit `@Fallback` annotiert ist
 - Für jede Methode eine sinnvolle Fallback-Antwort liefert:
-  - `registerTeam()` -> Loggt eine Warnung, gibt `null` zurück
-  - `registerShip()` -> Loggt eine Warnung, gibt `null` zurück
-  - `myShips()` -> Loggt eine Warnung, gibt eine leere Liste zurück
   - `setCourse()` -> Loggt eine Warnung (inkl. `shipId` aus dem Request)
   - `scan()` -> Loggt eine Warnung, gibt ein leeres `RadarScanResponseDto` zurück
 
