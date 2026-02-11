@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Singleton
-public class DatabaseMissionLogRepository implements MissionLogRepository{
+public class DatabaseMissionLogRepository implements MissionLogRepository {
     private final JpaMissionLogRepository jpaMissionLogRepository;
 
     public DatabaseMissionLogRepository(JpaMissionLogRepository jpaMissionLogRepository) {
