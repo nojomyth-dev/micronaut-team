@@ -1,19 +1,25 @@
 # 5 Operation: Data-Airlock (Validation) (10min)
 
-## Background
-Kommandeur! Weltraumpiraten versuchen, uns mit korrupten Datenpaketen zu sabotieren. Wir müssen unsere Schotten dicht machen! Bitte beschützt uns!
+Kommandeur! Code Rot! Die Weltraumpiraten sind zurück --- und diesmal sind sie KREATIV.
+
+Letzte Nacht hat unser Sicherheitsteam einen Einbruchsversuch abgefangen. Die Piraten haben versucht, uns Missionen mit negativen Belohnungen unterzujubeln. Stellt euch vor: Wir schließen eine Mission ab und SCHULDEN plötzlich 5000 Credits! Captain Zyx hat fast einen Herzinfarkt bekommen, als er die Buchhaltung gesehen hat.
+
+Aber es wird schlimmer.
+
+Unser Verteidigungssystem besteht aktuell aus... if/else-Statements. Hunderte davon. Geschrieben von unseren unbezahlten Praktikanten (die übrigens SEHR glücklich sind, hier zu sein --- bitte fragen Sie nicht nach). 
+
+Letzten Dienstag hat Praktikant Kevin vergessen, auf null zu prüfen. Am Mittwoch hat Praktikant Lisa das else weggelassen. Am Donnerstag hat Praktikant Tim... naja, Tim hat einfach alles gelöscht und gehofft, dass es niemand merkt.
+
+Wir brauchen ein ECHTES Sicherheitssystem!
+
+Die Ingenieursabteilung hat von einer uralten Technologie gehört: Bean Validation. Angeblich kann man damit Regeln EINMAL definieren und sie werden AUTOMATISCH durchgesetzt. Keine vergessenen if-Statements mehr! Keine "Ups, hab ich übersehen"-Ausreden!
+
 
 ## Anweisung
+Eure Aufgabe: Ersetzt eure manuellen if/else-Prüfungen durch Micronaut Bean Validation.
 
-Überprüft, ob die Mission korrekt abgeschlossen wurde.
+a) Nutzt `@NotNull`, `@NotBlank`, `@Min(1)` und `@Positive` in euren DTOs.
 
-Verwendet die Validation Annotationen `@Valid`, `@NotNull`, `@NotBlank`. Objekte in Post entgegennehmen
+b) Aktiviert die Validierung in eurem Controller mit der `@Valid` Annotation am Parameter. Ersetzt eure `if/else` Prüfungen durch Micronaut Validation. Es sollten keine if/else-Anweisungen mehr im Controller vorhanden sein.
 
-Ersetzt eure `if/else` Prüfungen durch Micronaut Bean Validation.
-
-Nutzt `@NotNull`, `@NotBlank`, `@Min(1)` und `@Positive` in euren Request-Klassen.
-
-
-DTO-Schutz: Nutzt `@NotNull`, `@NotBlank`, `@Min(1)` und `@Positive` in euren Request-Klassen.
-Trigger: Aktiviert die Validierung in eurem Controller mit der `@Valid` Annotation am Parameter.
-Erfolg: Versucht eine ungültige Mission zu senden — der Satellit sollte automatisch mit einem 400 Bad Request antworten, noch bevor euer Code ausgeführt wird! Euer Controller sollte bis auf das `@Valid` keine weitere Validierung mehr besitzen.
+c) Prüft nun eine ungültige MissionCompletion zu senden. Euer Planet sollte mit einem 400 Bad Request antworten, noch bevor euer Code ausgeführt wird!
