@@ -1,20 +1,16 @@
-# 2 Cadet, we want to explore! (10min)
+# 2 Modular Retrofitting (Dependency Injection) (15min)
 
 ## Background
-Kadett! Unser Heimatplanet wird etwas eng! Wir wollen expandieren. Mit unseren hochmodernen Teleskopen haben wir mögliche Sternensysteme ausfindig gemacht, die habitable Planeten haben könnten. Bitte fliege dorthin und prüfe die Planeten, ob diese schöne Strände haben...
-Damit unsere Raumschiffe wissen, welche möglichen Orte wir ausfindig gemacht haben, senden wir diese über unseren Satelliten zu euch.
+Kommandeur, wir haben über eine neue Methode kennengelernt, die es uns erlaubt, unsere Fabriken modularer zu gestalten! Wir denken, dass diese auch für dich sinnvoll sein können.
+Wir nennen es **Dependency Injection**. Damit können wir Systeme tauschen, ohne die ganze Station umzubauen!
 
-**Achtung:** Durch Störsignale kann es manchmal vorkommen, dass der Satellit falsche Daten empfängt und euch Missionen schickt, die gar nicht existieren! Durch hochtechnische Analysen konnten wir feststellen, dass die Credits in diesem Fall immer <= 0 sind. Bitte lehnt diese Missionen unbedingt ab!
+## Anweisung 
+Entkoppelt die Logik vom Controller wie folgt:
 
-## Anweisung
+a) Baue den Constructor in **MissionController** und **MissionService** so um, dass die Dependencies injiziert werden (Constructor Injection, siehe Folien). Denke dabei daran, die Dependencies zu Beans zu machen (Service und Repository).
 
-Dateipfad: `src/main/java/de/riversroses/missions/rest/MissionController.java`
-Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
+b) Erstelle ein Interface **MissionLogRepository** (`de.riversroses.missions.db.MissionLogRepository.java`) von dem **InMemoryMissionLogRepository** und **DatabaseMissionLogRepository** erben
 
-a) Die Klasse MissionController benötigt einen `de.riversroses.missions.business.MissionService.java`. Dieser soll als privates und finales Feld deklariert sein. Der MissionService soll über einen Constructor mit `new MissionService()` gesetzt werden.
+c) Annotiere die beiden Klassen so, dass wenn die Bean **JPAMissionLogRepository** vorhanden ist das **DatabaseMissionLogRepository** genutzt wird, ansonsten soll **InMemoryMissionLogRepository** genutzt werden.
 
-b) Implementiert den Endpunkt `GET /missions`. Dieser gibt den Return-Value von `missionService.generateOrReuseMission()` vom Datentyp `de.riversroses.missions.dto.MissionPayloadDto` zurück.
-
-c) Implementiert den Endpunkt `POST /missions/complete`. Die Funktion nimmt eine Mission vom Datentyp `de.riversroses.missions.dto.MissionCompletionDto` entgegen. Der Erfolg einer Mission wird über `missionService.markCompleted(mission)` gemeldet und schließlich wird `io.micronaut.http.HttpResponse.ok()` zurückgegeben.
-
-d) Verwendet `if/else` um Missionen mit einer Belohnung kleiner gleich 0 auszusortieren, indem ihr `io.micronaut.http.HttpResponse.badRequest()` zurückgebt.
+d) Probiere aus, ob du Unterschiede bemerkst, wenn **MissionRng** mit @Prototype oder mit @RequestScope annotiert ist.
