@@ -26,6 +26,7 @@ public class MissionService {
     @Value("${game.world.height:1000}")
     protected double worldHeight;
 
+    // Hier soll wegen aufgabe 3 MISSIONRNG ausgetauscht werden 
     public MissionService(MissionLogRepository repo, MissionRng rng) {
         this.repo = repo;
         this.rng = rng;

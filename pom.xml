@@ -62,6 +62,13 @@
             <artifactId>micronaut-data-processor</artifactId>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- OpenAPI annotations (compile-time + swagger annotations transitively) -->
+        <dependency>
+            <groupId>io.micronaut.openapi</groupId>
+            <artifactId>micronaut-openapi-annotations</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Micronaut Retry -->
         <dependency>
@@ -177,7 +184,7 @@
                             <artifactId>micronaut-http-validation</artifactId>
                             <version>${micronaut.core.version}</version>
                         </path>
-
+sn
                         <!-- OpenAPI annotation processor -->
                         <path>
                             <groupId>io.micronaut.openapi</groupId>

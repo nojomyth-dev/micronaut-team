@@ -38,7 +38,9 @@ public class PatrolStrategyService {
     if (token == null || shipId == null) {
       return;
     }
-
+    /* Das sollen die geneerieren 
+    //Sie sollen Scan aufruFen
+    /Sie sollen setcourse aufrufen
     try {
       RadarScanResponseDto scan = gameClient.scan(token, shipId);
       log.info("Scan: {} resources", scan.resources().size());
@@ -63,4 +65,5 @@ public class PatrolStrategyService {
       log.warn("Strategy tick failed: {}", e.toString());
     }
   }
+   */
 }

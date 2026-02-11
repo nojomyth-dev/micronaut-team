@@ -9,16 +9,17 @@ import io.micronaut.http.annotation.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller("/missions")
+@Controller("/missions") 
 @Slf4j
 public class MissionController {
 
     private final MissionService missionService;
-
+        
     public MissionController(MissionService missionService) {
         this.missionService = missionService;
     }
 
+    /*  Aufgabe 1
     @Get
     @Logged
     public MissionPayloadDto getMission() {
@@ -29,7 +30,12 @@ public class MissionController {
     @Post("/complete")
     @Logged
     public HttpResponse<?> complete(@Body @Valid MissionCompletionDto completion) {
+
         missionService.markCompleted(completion);
         return HttpResponse.ok();
     }
+    */
+
+   //costom valiudationerrorhandeler
+   //@Error(ConstraintExeption.class)
 }
