@@ -35,4 +35,10 @@ public class DatabaseMissionLogRepository implements MissionLogRepository{
         jpaMissionLogRepository.update(log);
     }
 
+    @Override
+    public void deleteAll() {
+        jpaMissionLogRepository.deleteAll();
+    }
+
+
 }

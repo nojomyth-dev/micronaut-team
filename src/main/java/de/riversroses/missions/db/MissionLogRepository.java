@@ -17,4 +17,7 @@ public interface MissionLogRepository {
   void save(MissionLog missionLog);
 
   void update(MissionLog log);
+
+  void deleteAll();
+
 }

@@ -12,12 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
+import de.riversroses.missions.db.MissionLogRepository;
 
 @Singleton
 @Slf4j
 public class MissionService {
 
-    private final DatabaseMissionLogRepository repo;
+    private final MissionLogRepository repo;
     private final MissionRng rng;
 
     @Value("${game.world.width:1000}")
@@ -26,7 +27,7 @@ public class MissionService {
     @Value("${game.world.height:1000}")
     protected double worldHeight;
 
-    public MissionService(DatabaseMissionLogRepository repo, MissionRng rng) {
+    public MissionService(MissionLogRepository repo, MissionRng rng) {
         this.repo = repo;
         this.rng = rng;
     }

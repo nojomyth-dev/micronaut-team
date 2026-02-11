@@ -78,7 +78,7 @@ class MissionControllerTest {
     }
 
     @Test
-    void completeMission_returns200_andRemovesMissionFromRepository() {
+    void completeMission_returns200_andMarksMissionAsCompleted() {
         // Note: completion marks the mission as COMPLETED; it is not removed from the repository.
 
         // Arrange
@@ -99,7 +99,7 @@ class MissionControllerTest {
         assertEquals(HttpStatus.OK, response.getStatus());
 
         MissionLog updated = repo.findByMissionId("mission-456").orElseThrow();
-        assertEquals(MissionStatus.PENDING, updated.getStatus());
+        assertEquals(MissionStatus.COMPLETED, updated.getStatus());
         assertNotNull(updated.getCompletedAt());
         assertEquals("ship-1", updated.getCompletedByShip());
         assertEquals("team-1", updated.getCompletedByTeam());
