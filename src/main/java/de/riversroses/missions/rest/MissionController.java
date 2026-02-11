@@ -57,6 +57,16 @@ public class MissionController {
         }
     }
     */
+
+    /* Musterlösung nach A5
+    
+    @Post("/complete")
+    public HttpResponse<?> complete(@Body @Valid MissionCompletionDto completion) {
+        missionService.markCompleted(completion);
+        return HttpResponse.ok();
+    }
+    
+    */
     
 
    //costom valiudationerrorhandeler
