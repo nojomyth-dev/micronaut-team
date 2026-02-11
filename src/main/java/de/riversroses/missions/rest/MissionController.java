@@ -19,7 +19,7 @@ public class MissionController {
         this.missionService = missionService;
     }
 
-    /*  Aufgabe 1
+    //  Aufgabe 1
     @Get
     public MissionPayloadDto getMission() {
         var mission = missionService.generateOrReuseMission();
@@ -32,7 +32,7 @@ public class MissionController {
         missionService.markCompleted(completion);
         return HttpResponse.ok();
     }
-    */
+    
 
    //costom valiudationerrorhandeler
    //@Error(ConstraintExeption.class)
