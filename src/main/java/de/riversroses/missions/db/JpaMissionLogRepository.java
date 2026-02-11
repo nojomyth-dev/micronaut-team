@@ -8,13 +8,10 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface MissionLogRepository {
+@Repository
+public interface JpaMissionLogRepository extends JpaRepository<MissionLog, Long> {
 
   List<MissionLog> findByStatusOrderByCreatedAtDesc(MissionStatus status);
 
   Optional<MissionLog> findByMissionId(String missionId);
-
-  void save(MissionLog missionLog);
-
-  void update(MissionLog log);
 }

@@ -7,22 +7,37 @@ import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Singleton
-@InterceptorBean(Logged.class)
+// TODO: Der Interceptor muss eine Bean sein.
+// TODO: Der Interceptor muss für das @interface registriert sein.
 public class LoggedInterceptor implements MethodInterceptor<Object, Object> {
+  
+    @Override
+    public Object intercept(MethodInvocationContext<Object, Object> context) {
+      
+        // TODO: Verwendet hier die aufrufende Klasse. Tipp: Schaut mal im context Object.      
+        Logger log = LoggerFactory.getLogger(this.getClass());
+        // TODO: Verwendet hier den aufrufenden Methodennamen. Tipp: Schaut mal im context Object.
+        String methodName = "dummy";
 
-  @Override
-  public Object intercept(MethodInvocationContext<Object, Object> context) {
-    Logger log = LoggerFactory.getLogger(context.getDeclaringType());
-    String name = context.getMethodName();
-    log.debug("[LOG] Enter {}()", name);
-    try {
-      Object result = context.proceed();
-      log.debug("[LOG] Exit {}()", name);
-      return result;
-    } catch (Throwable t) {
-      log.error("[LOG] Exception in {}(): {}", name, t.toString());
-      throw t;
+        // TODO: Hier könnt ihr loggen.
+
+        try {
+            // Sehr wichtig: Ihr müsst die eigentliche Methode wieder aufrufen!
+            Object result = context.proceed();
+            return result;
+        } catch (Throwable t) {
+            throw propagate(t);
+        }
     }
-  }
+
+    // Helper Method, hier müsst ihr nichts anpassen
+    private RuntimeException propagate(Throwable t) {
+        if (t instanceof RuntimeException runtimeException) {
+            return runtimeException;
+        }
+        if (t instanceof Error error) {
+            throw error;
+        }
+        return new RuntimeException(t);
+    }
 }

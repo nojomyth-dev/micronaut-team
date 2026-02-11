@@ -21,14 +21,12 @@ public class MissionController {
 
     /*  Aufgabe 1
     @Get
-    @Logged
     public MissionPayloadDto getMission() {
         var mission = missionService.generateOrReuseMission();
         return mission;
     }
 
     @Post("/complete")
-    @Logged
     public HttpResponse<?> complete(@Body @Valid MissionCompletionDto completion) {
 
         missionService.markCompleted(completion);
