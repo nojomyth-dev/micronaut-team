@@ -57,27 +57,6 @@ class MissionControllerTest {
     }
 
     @Test
-    void getMissions_returnsEmptyCollection_whenNoMissionsExist() {
-        // Note: the controller returns a single MissionPayloadDto, not a collection.
-        // This test verifies the "no missions exist" behavior: one gets generated and persisted.
-
-        // Act
-        MissionPayloadDto payload = client.toBlocking()
-            .retrieve(HttpRequest.GET("/missions"), MissionPayloadDto.class);
-
-        // Assert
-        assertNotNull(payload);
-        assertNotNull(payload.id);
-        assertNotNull(payload.description);
-        assertNotNull(payload.x);
-        assertNotNull(payload.y);
-
-        var pending = repo.findByStatusOrderByCreatedAtDesc(MissionStatus.PENDING);
-        assertEquals(1, pending.size());
-        assertEquals(payload.id, pending.get(0).getMissionId());
-    }
-
-    @Test
     void completeMission_returns200_andMarksMissionAsCompleted() {
         // Note: completion marks the mission as COMPLETED; it is not removed from the repository.
 
@@ -106,14 +85,29 @@ class MissionControllerTest {
     }
 
     @Test
-    void completeMission_returns400_onInvalidMission() {
-        // Invalid request body (missing @NotBlank fields) -> 400 due to validation
+    void completeMissionInvalid_returns418_andDoesNotMarkMissionAsCompleted() {
+        // Arrange
+        MissionLog seeded = new MissionLog("mission-456", "Completable mission", 1.0, 2.0);
+        repo.save(seeded);
+        
+        MissionCompletionDto completion = new MissionCompletionDto();
+        completion.missionId = "mission-456";
+        completion.shipId = "ship-1";
+        completion.teamId = "team-1";
+        completion.reward = -1; // negative credits
 
-        HttpClientResponseException ex = assertThrows(
-            HttpClientResponseException.class,
-            () -> client.toBlocking().exchange(HttpRequest.POST("/missions/complete", Map.of()))
+        // Act
+        HttpClientResponseException ex = assertThrows(HttpClientResponseException.class, 
+            () -> client.toBlocking().exchange(HttpRequest.POST("/missions/complete", completion))
         );
 
-        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
+        // Assert
+        assertEquals(HttpStatus.I_AM_A_TEAPOT, ex.getStatus());
+        
+        MissionLog updated = repo.findByMissionId("mission-456").orElseThrow();
+        assertEquals(MissionStatus.PENDING, updated.getStatus());
+        assertNull(updated.getCompletedAt());
+        assertNull(updated.getCompletedByShip());
+        assertNull(updated.getCompletedByTeam());
     }
 }

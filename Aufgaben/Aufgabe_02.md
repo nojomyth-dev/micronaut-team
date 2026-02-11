@@ -8,14 +8,13 @@ Damit unsere Raumschiffe wissen, welche möglichen Orte wir ausfindig gemacht ha
 
 ## Anweisung
 
+Dateipfad: `src/main/java/de/riversroses/missions/rest/MissionController.java`
 Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
 
-Dateipfad: `src/main/java/de/riversroses/missions/rest/MissionController.java`
+a) Die Klasse MissionController benötigt einen `de.riversroses.missions.business.MissionService.java`. Dieser soll als privates und finales Feld deklariert sein. Der MissionService soll über einen Constructor mit `new MissionService()` gesetzt werden.
 
-**a)** Die Klasse MissionController benötigt einen `de.riversroses.missions.business.MissionService` dieser soll private und final sein. Der MissionService soll über einen Constructor mit `new MissionService()` gesetzt werden.
+b) Implementiert den Endpunkt `GET /missions`. Dieser gibt den Return-Value von `missionService.generateOrReuseMission()` vom Datentyp `de.riversroses.missions.dto.MissionPayloadDto` zurück.
 
-**b)** `GET /missions` Implementiert diesen Endpunkt. Dieser gibt `missionService.generateOrReuseMission()` vom Datentyp `de.riversroses.missions.dto.MissionPayloadDto` zurück.
+c) Implementiert den Endpunkt `POST /missions/complete`. Die Funktion nimmt eine Mission vom Datentyp `de.riversroses.missions.dto.MissionCompletionDto` entgegen. Der Erfolg einer Mission wird über `missionService.markCompleted(mission)` gemeldet und schließlich wird `io.micronaut.http.HttpResponse.ok()` zurückgegeben.
 
-**c)** `POST /missions/complete` Implementiert diesen Endpunkt. Die Funktion nimmt eine Mission vom Datentyp `de.riversroses.missions.dto.MissionCompletionDto`entgegen. Der Erfolg einer Mission wird über `missionService.markCompleted(mission)` gemeldet und schließlich wird `io.micronaut.http.HttpResponse.ok()` zurückgegeben.
-
-**d)** Verwendet `if/else` um Missionen mit einer Belohnung kleiner gleich 0 auszusortieren, indem ihr `io.micronaut.http.HttpResponse.badRequest()` zurückgebt.
+d) Verwendet `if/else` um Missionen mit einer Belohnung kleiner gleich 0 auszusortieren, indem ihr `io.micronaut.http.HttpResponse.badRequest()` zurückgebt.

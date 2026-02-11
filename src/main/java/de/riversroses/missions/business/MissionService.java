@@ -32,11 +32,6 @@ public class MissionService {
         this.rng = rng;
     }
 
-//    public MissionService() {
-//        this.repo = new InMemoryMissionLogRepository();
-//        this.rng = new MissionRng();
-//    }
-
     @Logged
     public MissionPayloadDto generateOrReuseMission() {
         List<MissionLog> pending = repo.findByStatusOrderByCreatedAtDesc(MissionStatus.PENDING);

@@ -5,10 +5,12 @@ Kommandeur, wir haben über eine neue Methode kennengelernt, die es uns erlaubt,
 Wir nennen es **Dependency Injection**. Damit können wir Systeme tauschen, ohne die ganze Station umzubauen!
 
 ## Anweisung 
-Entkoppelt die Logik vom Controller.
+Entkoppelt die Logik vom Controller wie folgt:
 
-Repository-Pattern: Erstellt ein Interface MissionRepository und lasst  InMemoryMissionRepository davon erben.
+a) Baue den Constructor in **MissionController** und **MissionService** so um, dass die Dependencies injiziert werden (Constructor Injection, siehe Folien). Denke dabei daran, die Dependencies zu Beans zu machen (Service und Repository).
 
-The Power of DI: Nutzt das Constructor-Injection Pattern, um euren Service zu injizieren.
+b) Erstelle ein Interface **MissionLogRepository** (`de.riversroses.missions.db.MissionLogRepository.java`) von dem **InMemoryMissionLogRepository** und **DatabaseMissionLogRepository** erben
 
-Challenge (Optional, falls ihr schnell seid): Erstellt eine zweite Klasse DatabaseMissionRepository. Nutzt Micronaut-Annotationen (wie `@Requires` oder `@Primary`), um zwischen den Repositories zu wechseln, ohne den Code im Controller zu ändern.
+c) Annotiere die beiden Klassen so, dass wenn die Bean **JPAMissionLogRepository** vorhanden ist das **DatabaseMissionLogRepository** genutzt wird, ansonsten soll **InMemoryMissionLogRepository** genutzt werden.
+
+d) Probiere aus, ob du Unterschiede bemerkst, wenn **MissionRng** mit @Prototype oder mit @RequestScope annotiert ist.
