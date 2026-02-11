@@ -4,22 +4,18 @@
 Kadett! Unser Heimatplanet wird etwas eng! Wir wollen expandieren. Mit unseren hochmodernen Teleskopen haben wir mögliche Sternensysteme ausfindig gemacht, die habitable Planeten haben könnten. Bitte fliege dorthin und prüfe die Planeten, ob diese schöne Strände haben...
 Damit unsere Raumschiffe wissen, welche möglichen Orte wir ausfindig gemacht haben, senden wir diese über unseren Satelliten zu euch.
 
-## Anweisung
-
-Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
-
-`GET /missions` Implementiert diesen Endpunkt. Er soll eine Missionen zurückgeben. Um missionen von eurem Planeten zu Erhalten nutzt ```MissionService.generateOrReuseMission()``` und versendet das ```MissionPayloadDto``` Objekt mit ```return```.
-
-
-`POST /missions/complete` Implementiert diesen Endpunkt. Hier meldet der Satellit den Erfolg einer Mission durch das ```MissionCompletionDto```.
-
-
-## Background
-
 **Achtung:** Durch Störsignale kann es manchmal vorkommen, dass der Satellit falsche Daten empfängt und euch Missionen schickt, die gar nicht existieren! Durch hochtechnische Analysen konnten wir feststellen, dass die Credits in diesem Fall immer <= 0 sind. Bitte lehnt diese Missionen unbedingt ab!
 
 ## Anweisung
 
-Security-Check: Störsignale senden manchmal Missionen mit Belohnungen <= 0. 
+Erstellt die Schnittstellen, damit der Satellit (unser Server) mit eurem Planeten kommunizieren kann.
 
-Sortiert Missionen mit Belohnungen <= 0 aus und beantwortet diese mit `HTTP Statuscode 400` durch Verwendung von `if/else` und `return HttpResponse.badRequest()`.
+Dateipfad: `src/main/java/de/riversroses/missions/rest/MissionController.java`
+
+**a)** Die Klasse MissionController benötigt einen `de.riversroses.missions.business.MissionService` dieser soll private und final sein. Der MissionService soll über einen Constructor mit `new MissionService()` gesetzt werden.
+
+**b)** `GET /missions` Implementiert diesen Endpunkt. Dieser gibt `missionService.generateOrReuseMission()` vom Datentyp `de.riversroses.missions.dto.MissionPayloadDto` zurück.
+
+**c)** `POST /missions/complete` Implementiert diesen Endpunkt. Die Funktion nimmt eine Mission vom Datentyp `de.riversroses.missions.dto.MissionCompletionDto`entgegen. Der Erfolg einer Mission wird über `missionService.markCompleted(mission)` gemeldet und schließlich wird `io.micronaut.http.HttpResponse.ok()` zurückgegeben.
+
+**d)** Verwendet `if/else` um Missionen mit einer Belohnung kleiner gleich 0 auszusortieren, indem ihr `io.micronaut.http.HttpResponse.badRequest()` zurückgebt.
