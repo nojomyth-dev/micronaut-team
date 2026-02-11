@@ -1,6 +1,7 @@
 package de.riversroses.strategy;
 
 import de.riversroses.config.StrategyConfig;
+import de.riversroses.infra.client.GameServerClient;
 import de.riversroses.planet.business.RegistrationService;
 import de.riversroses.scan.dto.RadarScanResponseDto;
 import de.riversroses.ship.dto.SetCourseRequestDto;
@@ -17,12 +18,15 @@ public class PatrolStrategyService {
     private final RegistrationService registrationService;
     private final StrategyConfig config;
     private final Random random = new Random();
+    private final GameServerClient gameServerClient;
 
-    public PatrolStrategyService(RegistrationService registrationService,
+    public PatrolStrategyService(GameServerClient gameServerClient,
+                                 RegistrationService registrationService,
                                  StrategyConfig config) {
 
         this.registrationService = registrationService;
         this.config = config;
+        this.gameServerClient = gameServerClient;
     }
 
     @Scheduled(fixedDelay = "5s")
@@ -36,11 +40,11 @@ public class PatrolStrategyService {
         }
 
         try {
-            // scan
+            RadarScanResponseDto scan = gameServerClient.scan(token, shipId);
 
-            //SetCourseRequestDto course = calculateCourse(scan, shipId);
+            SetCourseRequestDto course = calculateCourse(scan, shipId);
 
-            // set course
+            gameServerClient.setCourse(token, course);
         } catch (Exception e) {
             log.warn("Strategy tick failed: {}", e.toString());
         }
