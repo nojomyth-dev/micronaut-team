@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class InMemoryMissionLogRepository {
 
-    private final HashMap<Long, MissionLog> missions;
+    private final HashMap<String, MissionLog> missions;
 
     public InMemoryMissionLogRepository() {
         this.missions = new HashMap<>();
@@ -20,14 +20,14 @@ public class InMemoryMissionLogRepository {
     }
 
     public Optional<MissionLog> findByMissionId(String missionId) {
-        return Optional.ofNullable(missions.get(Long.parseLong(missionId)));
+        return Optional.ofNullable(missions.get(missionId));
     }
 
     public void save(MissionLog missionLog) {
-        missions.put(missionLog.getId(), missionLog);
+        missions.put(missionLog.getMissionId(), missionLog);
     }
 
     public void update(MissionLog missionLog) {
-        missions.put(missionLog.getId(), missionLog);
+        missions.put(missionLog.getMissionId(), missionLog);
     }
 }
