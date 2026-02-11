@@ -1,12 +1,11 @@
-# 7 Hello.. Hello? Can you hear me? (OpenAPI) (10min)
+# 7 The Six Sigamas of Space (Testing) (10min)
 
 ## Background
+Admiral... Schlechte Neuigkeiten. Ein fehlerhaftes Bauteil hat ein Schiff zerstört. Wir führen ab sofort das Six Sigma Protokoll ein: Wir testen alles!
 
-Admiral! Wir haben Nachbarn entdeckt! Anscheinend gibt es andere intelligente Wesen im Sektor. Wir brauchen eine Visitenkarte, damit sie wissen, wie sie mit uns handeln können. Unsere Kuchenabsätze werden in die Höhe schießen!
+## Anweisung 
+Schreibt automatisierte Tests mit `@MicronautTest`.
 
-## Anweisung
-
-Eure Aufgabe: Dokumentiert eure Schnittstellen nach dem OpenAPI (Swagger) Standard.
-Setup: Fügt die OpenAPI-Abhängigkeiten hinzu.
-Beschreibung: Nutzt `@Operation` und `@Schema` Annotationen, um eure Endpunkte zu beschreiben. TODO: Vielleicht auch einfach nur die automatisch generierte benutzen?
-Visualisierung: Ruft die generierte /swagger-ui Seite auf und bewundert eure interaktive API-Dokumentation.
+Integrität: Prüft, ob GET /missions eine valide Liste zurückgibt. Einmal Leer, einmal mit mocked Missions!
+Erfolgsmeldung: Testet, ob POST /missions/complete bei korrekten Daten einen 200 OK sendet.
+Abwehr: Testet, ob eine invalide Mission (z.B. negative Credits) wirklich einen 400 Bad Request provoziert.
