@@ -2,6 +2,7 @@ package de.riversroses.missions.db;
 
 import de.riversroses.missions.model.MissionLog;
 import de.riversroses.missions.model.MissionStatus;
+import io.micronaut.context.annotation.Primary;
 import jakarta.inject.Singleton;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Singleton
+@Primary
 public class InMemoryMissionLogRepository implements MissionLogRepository {
 
     private final HashMap<String, MissionLog> missions;
