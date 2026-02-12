@@ -23,3 +23,15 @@ a) Nutzt `@NotNull`, `@NotBlank`, `@Min(1)` und `@Positive` in euren DTOs.
 b) Aktiviert die Validierung in eurem Controller mit der `@Valid` Annotation am Parameter. Ersetzt eure `if/else` Prüfungen durch Micronaut Validation. Es sollten keine if/else-Anweisungen mehr im Controller vorhanden sein.
 
 c) Prüft nun eine ungültige MissionCompletion zu senden. Euer Planet sollte mit einem 400 Bad Request antworten, noch bevor euer Code ausgeführt wird!
+
+
+
+## curl Befehl zum Testen
+curl -X PUT http://localhost:8081/missions/complete \
+     -H "Content-Type: application/json" \
+     -d '{
+          "missionId": "MISSION-123",
+          "shipId": "SHIP-456",
+          "teamId": "TEAM-789",
+          "reward": -1
+         }'

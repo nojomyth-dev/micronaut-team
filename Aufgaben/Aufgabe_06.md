@@ -31,3 +31,13 @@ c) Markiert diese Methode mit der `@Error`-Annotation. Nutzt `HttpResponse.statu
 d) Versucht eine ungültige MissionCompletion zu senden - es sollte nun mit `418 I'm a teapot` antworten.
 **Tipp**: `curl -i localhost:8081/missions`
 Das -i zeigt hier minimale Zusatzinformationen an, inklusive dem Status-Code.
+
+## curl Befehl zum Testen
+curl -X PUT http://localhost:8081/missions/complete \
+     -H "Content-Type: application/json" \
+     -d '{
+          "missionId": "MISSION-123",
+          "shipId": "SHIP-456",
+          "teamId": "TEAM-789",
+          "reward": -1
+         }'
