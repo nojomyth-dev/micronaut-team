@@ -17,8 +17,9 @@ public class InMemoryMissionLogRepository implements MissionLogRepository {
         this.missions = new HashMap<>();
     }
 
+    @Override
     public List<MissionLog> findByStatusOrderByCreatedAtDesc(MissionStatus status) {
-        return missions.values().stream().toList();
+        return missions.values().stream().filter(mission -> mission.getStatus().equals(status)).toList();
     }
 
     public Optional<MissionLog> findByMissionId(String missionId) {
