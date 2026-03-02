@@ -24,6 +24,9 @@ public class RegistrationService implements ApplicationEventListener<Application
   private final GameServerClient gameClient;
   private final TeamConfig teamConfig;
 
+  private volatile double homeX;
+  private volatile double homeY;
+
   // state
   private volatile String teamId;
   private volatile String primaryShipId;
@@ -56,6 +59,10 @@ public class RegistrationService implements ApplicationEventListener<Application
         teamConfig.token(), teamConfig.name(), teamConfig.planetName());
     var resp = gameClient.registerTeam(req);
     teamId = resp.teamId();
+
+    this.homeX = resp.planetX();
+    this.homeY = resp.planetY();
+
     LOG.info("Registered team {} with id {}", teamConfig.name(), teamId);
   }
 
@@ -103,4 +110,7 @@ public class RegistrationService implements ApplicationEventListener<Application
   public String primaryShipId() {
     return primaryShipId;
   }
+
+  public double getHomeX() { return homeX; }
+  public double getHomeY() { return homeY; }
 }

@@ -1,7 +1,7 @@
 team:
-  token: "cmd-demo-token-123"
-  name: "Demo Squadron"
-  planet-name: "Demo Prime"
+  token: "h4ck3rz-admin"
+  name: "h4ck3rz"
+  planet-name: "g3t_wr3ck3d 101"
 
 game-server:
   base-url: "http://localhost:8080"

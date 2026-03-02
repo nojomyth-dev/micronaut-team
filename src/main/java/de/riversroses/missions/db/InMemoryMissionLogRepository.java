@@ -21,7 +21,7 @@ public class InMemoryMissionLogRepository implements MissionLogRepository {
 
     @Override
     public List<MissionLog> findByStatusOrderByCreatedAtDesc(MissionStatus status) {
-        return missions.values().stream().toList();
+        return missions.values().stream().filter(mission -> mission.getStatus().equals(status)).toList();
     }
 
     @Override
